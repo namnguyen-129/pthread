@@ -17,7 +17,7 @@ void *producer(void* args){
         pthread_mutex_lock(&mutex);
         while(count == BUFFER_SIZE){ //nếu đầy thì producer phải đợi ở hàng đợi
             pthread_cond_wait(&pro, &mutex);
-            // vừa unlock mutex để thread khác(consumer) vào lấy item đi vưa block thread của func producer hiện tại vào ghi 
+// vừa unlock mutex để thread khác(consumer) vào lấy item đi vưa block thread của func producer hiện tại vào ghi 
         }
         // ra đến đây tức là conut <  BUFFER_SIZE, cồn chỗ để ghi thì ghi 
         
@@ -45,8 +45,8 @@ void *consumer(void* args){
         out = (out+1) % BUFFER_SIZE;
         count--;
         pthread_cond_signal(&pro); 
-        // đánh thức producer đang đợi ở hàng đợi rằng có chỗ trống để ghi vào
-        // Nếu mà không đánh thức pro dậy thì sẽ rơi vào deadlock vì k có dữ liệu ghi vào 
+// đánh thức producer đang đợi ở hàng đợi rằng có chỗ trống để ghi vào
+// Nếu mà không đánh thức pro dậy thì sẽ rơi vào deadlock vì k có dữ liệu ghi vào 
         pthread_mutex_unlock(&mutex);
         usleep(1000);
         
